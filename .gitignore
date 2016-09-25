@@ -1,3 +1,5 @@
 .DS_Store
 elm-stuff
 npm-debug.log
+.stack-work
+target
