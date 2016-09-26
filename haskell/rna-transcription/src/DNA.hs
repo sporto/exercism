@@ -1,6 +1,13 @@
 module DNA (toRNA) where
 
--- | if string contains invalid character, return Nothing
--- | if string contains only valid nucleotides, return Just transcription
 toRNA :: String -> Maybe String
-toRNA = undefined
+toRNA =
+	sequence . map fromChar
+
+fromChar :: Char -> Maybe Char
+fromChar c
+	| c == 'G' = Just 'C'
+	| c == 'C' = Just 'G'
+	| c == 'T' = Just 'A'
+	| c == 'A' = Just 'U'
+	| otherwise = Nothing
