@@ -1,8 +1,8 @@
 pub struct PascalsTriangle {
-	_rows: &mut Vec<Vec<u32>>,
+	count: usize,
 }
 
-fn make_row(previousRow: Vec<u32>) -> Vec<u32> {
+fn make_row(previousRow: &[u32]) -> Vec<u32> {
 	if previousRow.len() == 0 {
 		vec![1]
 	} else {
@@ -23,27 +23,26 @@ fn make_row(previousRow: Vec<u32>) -> Vec<u32> {
 	}
 }
 
-fn fill(acc: &mut Vec<Vec<u32>>, prev: Vec<u32>, to_go: u32)  -> &mut Vec<Vec<u32>> {
+fn fill(acc: Vec<Vec<u32>>, prev: &[u32], to_go: usize)  -> Vec<Vec<u32>> {
 	match to_go {
 		0 =>
 			acc,
 		_ => {
-			let new_row = make_row(prev);
-			acc.push(new_row);
-			fill(acc, new_row, to_go - 1)
+			let new_row = make_row(&prev);
+			let mut acc2 = acc.clone();
+			acc2.push(new_row.clone());
+			fill(acc2, &new_row, to_go - 1)
 		}
 	}
 }
 
 impl PascalsTriangle {
 	pub fn new(row_count: u32) -> Self {
-		let mut acc = vec![];
-		let res = fill(acc, vec![], row_count);
-
-		PascalsTriangle { _rows: res }
+		PascalsTriangle { count: row_count as usize }
 	}
 
 	pub fn rows(&self) -> Vec<Vec<u32>> {
-		self._rows
+		let acc = Vec::new();
+		fill(acc, &vec![], self.count)
 	}
 }
