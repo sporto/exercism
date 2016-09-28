@@ -6,12 +6,11 @@ nucleotides = "ACGT"
 
 isValidNuc :: Char -> Bool
 isValidNuc given =
-	any (\n -> n == given) nucleotides
+	elem given nucleotides
 
 isValidStrand :: String -> Bool
-isValidStrand strand =
-	(==) strand
-	$ filter (\n -> isValidNuc n) strand
+isValidStrand =
+	all isValidNuc
 
 count :: Char -> String -> Either String Int
 count c strand =
