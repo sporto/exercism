@@ -1,7 +1,6 @@
 module School (School, add, empty, grade, sorted) where
 
 import Data.List
-import qualified Data.Map as Map
 
 type School = [(Integer, String)]
 
