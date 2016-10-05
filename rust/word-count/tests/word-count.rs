@@ -22,7 +22,6 @@ fn test_no_words() {
 }
 
 #[test]
-#[ignore]
 fn test_count_one_word() {
     check_word_count("word", vec![("word", 1)]);
 }
