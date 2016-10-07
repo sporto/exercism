@@ -1,2 +1,6 @@
 let greet subject =
-  "your code here"
+	match subject with
+		None ->
+			"Hello, World!" |
+		Some name ->
+			"Hello, " ^ name ^ "!"

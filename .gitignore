@@ -3,3 +3,4 @@ elm-stuff
 npm-debug.log
 .stack-work
 target
+_build
