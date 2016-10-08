@@ -13,14 +13,8 @@ let isYell q =
 	hasLetters q && isUpper q
 
 let response_for q =
-	let trimmed =
-		String.trim q
-	in
-		if String.equal trimmed "" then
-			"Fine. Be that way!"
-		else if isYell trimmed then
-			"Whoa, chill out!" 
-		else if isQuestion trimmed then
-			"Sure."
-		else
-			"Whatever."
+	match (String.trim q) with
+	| "" -> "Fine. Be that way!"
+	| q when isYell q -> "Whoa, chill out!" 
+	| q when isQuestion q -> "Sure."
+	| _ -> "Whatever."
