@@ -1,17 +1,18 @@
 use std::collections::HashMap;
 
-pub fn word_count(sentence: &str) -> HashMap<String, u32> {
-	let words = sentence
-		.replace("_", ",")
-		.replace(" ", ",")
-		.split(",");
-
-	let mut m = HashMap::new();
-
-	for word in words {
-		let c = m.entry(word.to_string()).or_insert(0);
+fn countWords(mut hashMap: HashMap<String, u32>, word: String) -> HashMap<String, u32> {
+	{
+		let c = hashMap.entry(word).or_insert(0);
 		*c += 1;
 	}
 
-	m
+	hashMap
+}
+
+pub fn word_count(sentence: &str) -> HashMap<String, u32> {
+	sentence
+		.split(|c:char| !c.is_alphanumeric())
+		.filter(|w| !w.is_empty())
+		.map(|w| w.to_lowercase())
+		.fold(HashMap::new(), countWords)
 }
