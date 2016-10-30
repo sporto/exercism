@@ -5,3 +5,7 @@ npm-debug.log
 target
 _build
 *.native
+/fsharp/hello-world/obj
+/fsharp/hello-world/bin
+/fsharp/hello-world/TestResult.xml
+/fsharp/hello-world/project.lock.json
