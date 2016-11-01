@@ -9,3 +9,7 @@ _build
 /fsharp/hello-world/bin
 /fsharp/hello-world/TestResult.xml
 /fsharp/hello-world/project.lock.json
+TestResult.xml
+**/bin/Debug/
+**/bin/Release/
+**/obj/Debug/
