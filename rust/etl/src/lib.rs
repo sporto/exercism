@@ -1,13 +1,11 @@
-const scores = [
-    ("AEIOULNRST", 1),
-    ("DG", 2),
-    ("BCMP", 3),
-    ("FHVWY", 4),
-    ("K", 5),
-    ("JX", 8),
-    ("QZ", 10)
-]
+use std::collections::BTreeMap;
 
-pub fn transform(BTreeMap<i32, Vec<String>>) -> BTreeMap<String, i32> {
-    
+pub fn transform(tree: &BTreeMap<i32, Vec<String>>) -> BTreeMap<String, i32> {
+    let mut result = BTreeMap::new();
+    for (points, keys) in tree {
+        for key in keys {
+            result.insert(key.to_lowercase().to_string(), *points);
+        }
+    }
+    result
 }
