@@ -1,14 +1,19 @@
+extern crate regex;
+
 use std::cmp;
+use regex::Regex;
 
 pub fn lsp(digits: &str, how_many: usize) -> Result<u32, &str> {
-    let len = digits.len();
 
-    if len < how_many {
-        return Err("Digits must be larger");
+    let re = Regex::new(r"\D").unwrap();
+
+    if re.is_match(digits) {
+        return Err("Not all numbers");
     }
 
-    if digits.parse::<u64>().is_err() {
-        return Err("Not all numbers");
+    let len = digits.len();
+    if len < how_many {
+        return Err("Digits must be larger");
     }
 
     let mut largest = 0;
