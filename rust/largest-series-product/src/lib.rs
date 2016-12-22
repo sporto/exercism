@@ -1,32 +1,27 @@
-extern crate regex;
+pub fn lsp(chars: &str, how_many: usize) -> Result<u32, &str> {
 
-use std::cmp;
-use regex::Regex;
-
-pub fn lsp(digits: &str, how_many: usize) -> Result<u32, &str> {
-
-    let re = Regex::new(r"\D").unwrap();
-
-    if re.is_match(digits) {
-        return Err("Not all numbers");
-    }
-
-    let len = digits.len();
+    let len = chars.len();
     if len < how_many {
-        return Err("Digits must be larger");
+        return Err("Chars must be larger");
     }
 
-    let mut largest = 0;
-    let end = len + 1 - how_many;
-
-    for n in 0..end {
-        let sum = digits.chars()
-            .skip(n)
-            .take(how_many)
-            .map(|c| c.to_digit(10).unwrap_or(0))
-            .product();
-        largest = cmp::max(largest, sum);
+    if how_many == 0 {
+        return Ok(1);
     }
 
-    Ok(largest)
+    let mut nums: Vec<u32> = vec![];
+
+    for c in chars.chars() {
+        match c.to_digit(10) {
+            Some(n) => nums.push(n),
+            _ => return Err("Not number"),
+        }
+    }
+
+    let max: u32 = nums.windows(how_many)
+        .map(|s| s.iter().product())
+        .max()
+        .unwrap();
+
+    Ok(max)
 }
