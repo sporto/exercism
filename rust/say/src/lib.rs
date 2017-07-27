@@ -1,5 +1,11 @@
 #![feature(i128_type)]
 
+const SMALL : &[&'static str] = &[
+    "", "one", "two","three","four","five","six","seven","eight","nine","ten",
+    "eleven","twelve","thirteen","fourteen","fifteen",
+    "sixteen","seventeen","eighteen","nineteen"
+    ];
+
 pub fn encode(num: u64) -> String {
   match num {
         0 =>
@@ -55,7 +61,7 @@ fn hundreds(n: u64) -> String {
         n if n > 999 =>
             panic!("Too large"),
         n if n > 99 =>
-            unit(n / 100) + " hundred " + &tens(n % 100),
+            small(n / 100) + " hundred " + &tens(n % 100),
         _ =>
             tens(n)
     }
@@ -102,7 +108,7 @@ fn tens(num: u64) -> String {
         10 =>
             "ten".to_string(),
         _ =>
-            unit(num),
+            small(num),
     }
 }
 
@@ -111,33 +117,15 @@ fn unit_after_tens(num: u64) -> String {
         0 =>
             "".to_string(),
         _ => 
-            "-".to_string() + &unit(num),
+            "-".to_string() + &small(num),
     }
 }
 
-fn unit(num: u64) -> String {
+fn small(num: u64) -> String {
     match num {
-        9 =>
-            "nine".to_string(),
-        8 =>
-            "eight".to_string(),
-        7 =>
-            "seven".to_string(),
-        6 =>
-            "six".to_string(),
-        5 =>
-            "five".to_string(),
-        4 =>
-            "four".to_string(),
-        3 =>
-            "three".to_string(),
-        2 =>
-            "two".to_string(),
-        1 =>
-            "one".to_string(),
-        0 =>
-            "".to_string(),
+        0...19 =>
+            SMALL[num as usize].to_string(),
         _ =>
-            panic!("Not unit"),
+            panic!("Not small"),
     }
 }
