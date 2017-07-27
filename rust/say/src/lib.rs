@@ -6,6 +6,10 @@ const SMALL: &[&'static str] = &[
     "sixteen","seventeen","eighteen","nineteen"
     ];
 
+const TENS: &[&'static str] = &[
+    "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+    ];
+
 const BIG: &[&'static str] = &[
     "", "", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"
     ];
@@ -60,47 +64,14 @@ fn hundreds(n: u64) -> String {
 }
 
 fn tens(num: u64) -> String {
-     match num {
-        n if n > 99 =>
-            panic!("Too large"),
-        n if n > 89 =>
-            "ninety".to_string() + &unit_after_tens(n % 90),
-        n if n > 79 =>
-            "eighty".to_string() + &unit_after_tens(n % 80),
-        n if n > 69 =>
-            "seventy".to_string() + &unit_after_tens(n % 70),
-        n if n > 59 =>
-            "sixty".to_string() + &unit_after_tens(n % 60),
-        n if n > 49 =>
-            "fifty".to_string() + &unit_after_tens(n % 50),
-        n if n > 39 =>
-            "forty".to_string() + &unit_after_tens(n % 40),
-        n if n > 29 =>
-            "thirty".to_string() + &unit_after_tens(n % 30),
-        n if n > 19 =>
-            "twenty".to_string() + &unit_after_tens(n % 20),
-        19 =>
-            "nineteen".to_string(),
-        18 =>
-            "eighteen".to_string(),
-        17 =>
-            "seventeen".to_string(),
-        16 =>
-            "sixteen".to_string(),
-        15 =>
-            "fithteen".to_string(),
-        14 =>
-            "fourteen".to_string(),
-        13 =>
-            "therteen".to_string(),
-        12 =>
-            "twelve".to_string(),
-        11 =>
-            "eleven".to_string(),
-        10 =>
-            "ten".to_string(),
-        _ =>
+    let n = num / 10;
+    match n {
+        2...9 =>
+            TENS[n as usize].to_string() + &unit_after_tens(num % (n * 10)),
+        0...1 =>
             small(num),
+        _ =>
+            panic!("Too large"),
     }
 }
 
