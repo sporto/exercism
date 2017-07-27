@@ -1,9 +1,13 @@
 #![feature(i128_type)]
 
-const SMALL : &[&'static str] = &[
+const SMALL: &[&'static str] = &[
     "", "one", "two","three","four","five","six","seven","eight","nine","ten",
     "eleven","twelve","thirteen","fourteen","fifteen",
     "sixteen","seventeen","eighteen","nineteen"
+    ];
+
+const BIG: &[&'static str] = &[
+    "", "", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"
     ];
 
 pub fn encode(num: u64) -> String {
@@ -34,22 +38,10 @@ fn multiplier_word(chunk: u64, iter: i8) -> String {
             "".to_string(),
         _ =>
             match iter {
-                1 =>
-                    "".to_string(),
-                2 =>
-                    " thousand ".to_string(),
-                3 =>
-                    " million ".to_string(),
-                4 =>
-                    " billion ".to_string(),
-                5 =>
-                    " trillion ".to_string(),
-                6 =>
-                    " quadrillion ".to_string(),
-                7 =>
-                    " quintillion ".to_string(),
-                _ =>
+                n if n > 7 =>
                     panic!("Too large"),
+            _ =>
+                " ".to_string() + BIG[iter as usize] + " ",
             }
     }
 }
