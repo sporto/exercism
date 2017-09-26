@@ -4,10 +4,12 @@ type
   Reactor* = ref object
     cells: seq[Cell]
     lastId: int
+    dirtyCellsIdMap: Table[int, bool]
 
   Cell* = ref object of RootObj
     callbacks: Table[int, CallbackFn]
     computeFn: ComputeFn
+    dirty: bool
     id: int
     inputIds: seq[int]
     reactor: Reactor
@@ -24,6 +26,7 @@ type
 proc newReactor*(): Reactor =
   Reactor(
     cells: @[],
+    dirtyCellsIdMap: initTable[int, bool](),
     lastId: 0,
   )
 
@@ -54,34 +57,44 @@ proc getValuesForInputs(cell: Cell): seq[int] =
 
   cell.inputIds.map(getValue)
 
-proc onReactorValueChanged(reactor: Reactor, changedCell: Cell)
+proc onReactorCellChanged(reactor: Reactor, changedCell: Cell)
 
 proc compute(cell: Cell) =
   if cell of ComputeCell:
+    cell.reactor.dirtyCellsIdMap.add(cell.id, false)
     let inputs = cell.getValuesForInputs()
     let newValue = cell.computeFn(inputs)
     if cell.valueP != newValue:
       cell.valueP = newValue
       for callback in cell.callbacks.values:
         callback(newValue)
-      onReactorValueChanged(cell.reactor, cell)
+      onReactorCellChanged(cell.reactor, cell)
 
-proc onValueChanged(cell: Cell, other: Cell) =
+proc onOtherCellChanged(cell: Cell, other: Cell) =
   proc isSameAsOther(id: int): bool =
     id == other.id
+  
+  proc isNotDirty(id: int): bool =
+    not cell.reactor.dirtyCellsIdMap.mgetOrPut(id, false)
 
   if cell of ComputeCell:
-      if cell.inputIds.any(isSameAsOther):
+    # This should not be called untils all the deps for this are resolved
+    if cell.inputIds.any(isSameAsOther):
+      # Mark this cell as dirty
+      cell.reactor.dirtyCellsIdMap.add(cell.id, true)
+      # Skip if any dep is dirty
+      # Otherwise run it
+      if cell.inputIds.all(isNotDirty):
         cell.compute()
 
-proc onReactorValueChanged(reactor: Reactor, changedCell: Cell) =
+proc onReactorCellChanged(reactor: Reactor, changedCell: Cell) =
   for cell in reactor.cells:
-    cell.onValueChanged(changedCell)
+    cell.onOtherCellChanged(changedCell)
 
 proc `value=`*(cell: InputCell, value: int) =
   if cell.valueP != value:
     cell.valueP = value
-    onReactorValueChanged(cell.reactor, cell)
+    onReactorCellChanged(cell.reactor, cell)
 
 proc value*(cell: Cell): int =
   cell.valueP
