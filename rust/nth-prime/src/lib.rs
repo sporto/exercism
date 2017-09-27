@@ -1,4 +1,4 @@
-fn is_prime(n: u32) -> bool {
+fn is_prime(n: usize) -> bool {
     match n {
         _ if n <= 1 => false,
         _ if n <= 3 => true,
@@ -17,21 +17,25 @@ fn is_prime(n: u32) -> bool {
     }
 }
 
-pub fn nth(target_num: u16) -> Result<u32, String> {
+pub fn nth(target_num: usize) -> Result<usize, String> {
     match target_num {
         0 => Err("Zero".to_string()),
         _ => {
-            let mut current_num = 0;
-            let mut current_prime_pos = 0;
+            let mut current_num: usize = 1;
+            let mut primes: Vec<usize> = vec![];
 
-            while current_prime_pos < target_num {
-                current_num += 1;
-                if is_prime(current_num) {
-                    current_prime_pos += 1;
+            while primes.len() < target_num {
+                let prime = is_prime(current_num);
+
+                if prime {
+                    primes.push(current_num);
                 }
+
+                current_num += 1;
             }
 
-            Ok(current_num)
+            primes.pop()
+                .ok_or("Error".to_string())
         }
     }
 }
