@@ -36,7 +36,6 @@ fn test_zero_pieces() {
 }
 
 #[test]
-#[ignore]
 fn test_full() {
     let input = vec!["nail", "shoe", "horse", "rider", "message", "battle", "kingdom"];
     let expected = vec!["For want of a nail the shoe was lost.",
