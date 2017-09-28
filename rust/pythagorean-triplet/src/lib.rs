@@ -1,14 +1,14 @@
-pub fn find() -> Option<u32> {
-    for a in 3_u32..500 {
-        for b in a..500 {
-            for c in b..500 {
-                let valid = a.pow(2) + b.pow(2) == c.pow(2);
-                let sum = a + b + c;
+pub fn find() -> Option<i32> {
+    let target = 1000;
 
-                println!("{} {} {} sum={} {}", a, b, c, sum, valid);
-                if valid && sum == 1000 {
-                    return Some(a * b * c);
-                }
+    for a in 3..target {
+        for b in a..target {
+            let c = target - a - b;
+            let valid = a * a + b * b == c * c;
+
+            if valid {
+                // 200, 375, 425
+                return Some(a * b * c);
             }
         }
     };
