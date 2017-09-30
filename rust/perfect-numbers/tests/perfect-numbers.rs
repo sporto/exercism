@@ -8,7 +8,6 @@ fn basic() {
 }
 
 #[test]
-#[ignore]
 fn test_all() {
     struct TestClassification {
         num: u64,
