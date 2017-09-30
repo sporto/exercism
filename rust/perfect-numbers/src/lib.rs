@@ -10,26 +10,16 @@ pub fn classify(n: u64) -> Result<Classification, &'static str> {
         return Err("Number must be positive");
     };
 
-    let mut factors = vec![];
-    let mut factor = 1;
+    let sum: u64 = (1 ..  n / 2 + 1)
+        .filter(|i| n % i == 0)
+        .sum();
 
-    while factor < n {
-        if n % factor == 0 {
-            factors.push(factor);
-        };
-        factor += 1;
-    };
-
-    let sum: u64 = factors.into_iter().sum();
-
-    let cla = match sum {
+    match sum {
         _ if sum < n =>
-            Classification::Deficient,
+            Ok(Classification::Deficient),
         _ if sum == n =>
-            Classification::Perfect,
+            Ok(Classification::Perfect),
         _ =>
-            Classification::Abundant,
-    };
-
-    Ok(cla)
+            Ok(Classification::Abundant),
+    }
 }
