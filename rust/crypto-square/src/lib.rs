@@ -3,18 +3,19 @@ pub fn encrypt(input: &str) -> String {
         .to_lowercase()
         .chars()
         .filter(|c| c.is_alphabetic())
-        .collect::<String>();
+        .collect::<Vec<char>>();
 
-    // TODO, don't collect yet
-    
-    let cols = (joined.len() as f32).sqrt().ceil();
+    let cols: usize = (joined.len() as f32)
+        .sqrt().ceil() as usize;
 
-    // println!("{}", cols);
-    joined
-        .chars()
-        .chunks(cols)
-        // ["ab", "cd"]
+    let mut output = "".to_string();
 
+    for chunk in joined.chunks(cols) {
+        for c in chunk {
+            output = output + &c.to_string();
+        };
+        output = output + " ";
+    };
 
-    joined
+    output
 }
