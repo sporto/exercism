@@ -4,6 +4,14 @@ fn is_valid(c: &char) -> bool {
     c.is_alphabetic() && c.is_ascii()
 }
 
+fn get_size(len: usize) -> (usize, usize) {
+    let l = len as f32;
+    let cols = l.sqrt().floor();
+    let rows = (l / cols).ceil();
+
+    (cols as usize, rows as usize)
+}
+
 pub fn encrypt(input: &str) -> String {
     if input == "" {
         return "".to_string();
@@ -15,14 +23,7 @@ pub fn encrypt(input: &str) -> String {
         .filter(is_valid)
         .collect::<Vec<char>>();
 
-    let len = joined.len() as f32;
-
-    let cols: usize = len
-        .sqrt().floor() as usize;
-    
-    let rows = (len / cols as f32).ceil() as usize;
-
-    println!("len {} cols {} rows {}", len, cols, rows);
+    let (cols, rows) = get_size(joined.len());
 
     let mut output = "".to_string();
 
