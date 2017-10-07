@@ -16,8 +16,6 @@ pub fn encrypt(input: &str) -> String {
         .collect::<Vec<char>>();
 
     let len = joined.len() as f32;
-    
-    let joined2: String = joined.iter().cloned().collect();
 
     let cols: usize = len
         .sqrt().floor() as usize;
@@ -31,8 +29,13 @@ pub fn encrypt(input: &str) -> String {
     for a in 0..rows {
         for b in 0..cols {
             let pos = a + (b * rows);
-            // println!("pos {}", pos);
-            output = output + &joined2[pos..pos+1];
+            let maybeC = joined.get(pos);
+
+            match maybeC {
+                Some(c) =>
+                     output = output + &c.to_string(),
+                None => {},
+            }
         };
         output = output + " ";
     };
