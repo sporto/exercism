@@ -27,12 +27,11 @@ pub fn encrypt(input: &str) -> String {
 
     let mut output = "".to_string();
 
-    for a in 0..rows {
-        for b in 0..cols {
-            let pos = a + (b * rows);
-            let maybeC = joined.get(pos);
+    for row in 0..rows {
+        for col in 0..cols {
+            let pos = row + (col * rows);
 
-            match maybeC {
+            match joined.get(pos) {
                 Some(c) =>
                      output = output + &c.to_string(),
                 None => {},
