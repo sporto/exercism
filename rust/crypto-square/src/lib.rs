@@ -1,35 +1,18 @@
-use std::ascii::AsciiExt;
-
-fn is_valid(c: &char) -> bool {
-    c.is_alphabetic() && c.is_ascii()
-}
-
-fn get_size(len: usize) -> (usize, usize) {
-    let l = len as f32;
-    let cols = l.sqrt().floor();
-    let rows = (l / cols).ceil();
-
-    (cols as usize, rows as usize)
-}
-
 pub fn encrypt(input: &str) -> String {
-    if input == "" {
-        return "".to_string();
-    }
-
-    let joined = input
+    let joined: Vec<char> = input
         .to_lowercase()
         .chars()
-        .filter(is_valid)
-        .collect::<Vec<char>>();
+        .filter(|c| c.is_alphabetic())
+        .collect();
 
-    let (cols, rows) = get_size(joined.len());
+    let size = (joined.len() as f32)
+        .sqrt().ceil() as usize;
 
     let mut output = "".to_string();
 
-    for row in 0..rows {
-        for col in 0..cols {
-            let pos = row + (col * rows);
+    for row in 0..size {
+        for col in 0..size {
+            let pos = row + (col * size);
 
             match joined.get(pos) {
                 Some(c) =>
