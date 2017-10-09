@@ -4,16 +4,16 @@ fn rotate_char(offset: usize, c: char) -> char {
     };
 
     let first = if c.is_lowercase() {
-        'a' as u8
+        'a'
     } else {
-        'A' as u8
-    };
+        'A'
+    } as u8;
 
-    let last: u8 =  if c.is_lowercase() {
-        'z' as u8
+    let last =  if c.is_lowercase() {
+        'z'
     } else {
-        'Z' as u8
-    };
+        'Z'
+    } as u8;
 
     let range = last - first + 1;
     let code  = (c as u8 - first + offset as u8) % range + first;
