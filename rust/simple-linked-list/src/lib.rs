@@ -1,5 +1,5 @@
 pub struct SimpleLinkedList<T> {
-    node: Option<Node<T>>,
+    head: Option<Box<Node<T>>>,
 }
 
 pub struct Node<T> {
@@ -9,26 +9,44 @@ pub struct Node<T> {
 
 impl<T> SimpleLinkedList<T> {
     pub fn new() -> Self {
-        SimpleLinkedList { node: None }
+        SimpleLinkedList { head: None }
     }
 
     pub fn len(&self) -> usize {
-        match self.node {
+        match self.head {
             None => 0,
             Some(ref n) => n.len(),
         }
     }
 
     pub fn push(&mut self, element: T) {
-        unimplemented!()
+        let head = self.head.take();
+
+        let node = Some(Box::new(Node {
+            data: element,
+            next: head,
+        }));
+
+        self.head = node;
     }
 
     pub fn pop(&mut self) -> Option<T> {
-        unimplemented!()
+        let head = self.head.take();
+
+        match head {
+            None => None,
+            Some(mut node) => {
+                self.head = node.next.take();
+                Some(node.data)
+            }
+        }
     }
 
     pub fn peek(&self) -> Option<&T> {
-        unimplemented!()
+        match self.head {
+            None => None,
+            Some(ref node) => Some(&node.data),
+        }
     }
 }
 
