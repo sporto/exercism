@@ -58,7 +58,6 @@ fn test_from_slice() {
 }
 
 #[test]
-#[ignore]
 fn test_reverse() {
     let mut list: SimpleLinkedList<u32> = SimpleLinkedList::new();
     list.push(1);
@@ -72,7 +71,7 @@ fn test_reverse() {
 }
 
 #[test]
-#[ignore]
+
 fn test_into_vector() {
     let mut v = Vec::new();
     let mut s = SimpleLinkedList::new();
