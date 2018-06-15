@@ -1,13 +1,5 @@
-import strutils
+import strutils, unicode, sequtils
 
 proc isIsogram*(input: string): bool =
-  var seen = ""
-
-  for c in input:
-    if isAlphaAscii(c):
-      let lower = c.toLower
-      if seen.contains(lower):
-        return false
-      seen &= lower
-
-  true
+  let one = input.toLowerAscii.toRunes.filter(isAlpha)
+  one.deduplicate.len == one.len
