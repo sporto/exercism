@@ -1,19 +1,15 @@
 import sequtils, strutils
 
 proc iden(c: char): char =
-  result = case c:
-    of 'G':'C'
-    of 'C': 'G'
-    of 'T': 'A'
-    of 'A': 'U'
+  case c:
+    of 'G': return 'C'
+    of 'C': return 'G'
+    of 'T': return 'A'
+    of 'A': return 'U'
     else:
-      '-'
-
-  if result == '-':
-    raise newException(ValueError, "didn't do stuff")
-      
+      raise newException(ValueError, "didn't do stuff")
 
 proc toRna*(input: string) : string =
-  toSeq(input.items)
+  input
     .map(iden)
-    .join("")
+    .join()
