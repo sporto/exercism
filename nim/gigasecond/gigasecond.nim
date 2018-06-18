@@ -1,7 +1,6 @@
 import times, math
 
-const milliseconds = pow(10.0, 9)
-const interval = initInterval(0, int(milliseconds))
+const interval = initInterval(seconds = 1_000_000_000)
 
 proc addGigasecond*(input: DateTime): DateTime =
   input + interval
