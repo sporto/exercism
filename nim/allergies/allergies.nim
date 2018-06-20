@@ -16,23 +16,14 @@ const things = [
 ]
 
 proc lst*(allergies: Allergies): seq[string] =
-  var current = 12
-  var remainder = allergies.score
-  var positions: seq[int] = @[]
   result = @[]
-
-  while current >= 0:
-    let score = 1 shl current
+  var remainder = allergies.score
+  for i, _ in things:
+    let score = 1 shl i
     let diff = remainder - score
-    if diff >= 0:
-      positions.add(current)
-      remainder = diff
-    dec current
-
-  for i in countdown(high(positions),low(positions)):
-    let pos = positions[i]
-    if things.len > pos:
-      result.add(things[pos])
+    if diff shr (i + 1) == remainder shr (i + 1):
+      result.add(things[i])
+      remainder = diff 
 
 proc isAllergicTo*(allergies: Allergies, thing: string): bool =
   lst(allergies).contains(thing)
