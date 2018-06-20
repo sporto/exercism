@@ -1,10 +1,10 @@
-import algorithm
+# import algorithm
 
 type
   Allergies* = object of RootObj
     score*: int
 
-const things = [
+const allergens = [
   "eggs",
   "peanuts",
   "shellfish",
@@ -17,13 +17,10 @@ const things = [
 
 proc lst*(allergies: Allergies): seq[string] =
   result = @[]
-  var remainder = allergies.score
-  for i, _ in things:
+  for i, _ in allergens:
     let score = 1 shl i
-    let diff = remainder - score
-    if diff shr (i + 1) == remainder shr (i + 1):
-      result.add(things[i])
-      remainder = diff 
+    if (score and allergies.score) != 0:
+      result.add(allergens[i])
 
 proc isAllergicTo*(allergies: Allergies, thing: string): bool =
   lst(allergies).contains(thing)
