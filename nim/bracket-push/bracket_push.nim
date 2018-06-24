@@ -19,7 +19,7 @@ proc process(acc: var seq[char], c: char): seq[char] =
 
   acc
 
-proc reduce[T](source: string, f: proc(acc: var seq[T], v: char): seq[T], acc: seq[T]): seq[T] =
+proc reduce[T](source: string, f: proc(acc: var T, v: char): T, acc: T): T =
   result = acc
   for val in source:
     result = f(result, val)
