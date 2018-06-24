@@ -1,19 +1,14 @@
-import sequtils
+import sequtils, strutils
 
 proc process(acc: var seq[char], c: char): seq[char] =
-  let last = if acc.len > 0: acc[acc.len - 1] else: ' '
+  let lastIx = acc.len - 1
+  let last = if acc.len > 0: acc[lastIx] else: ' '
+  let open = "[{(".contains(c)
+  let close = "]})".contains(c)
+  let pair = "[](){}".contains(last & c)
 
-  let open = c == '[' or c == '{' or c == '('
-  let close = c == ']' or c == '}' or c == ')'
-
-  let complete = case last & c:
-    of "[]": true
-    of "()": true
-    of "{}": true
-    else: false
-
-  if complete:
-    acc.delete(acc.len - 1, acc.len - 1)
+  if pair:
+    acc.delete(lastIx)
   elif open or close:
     acc.add(c)
 
@@ -25,6 +20,4 @@ proc reduce[T](source: string, f: proc(acc: var T, v: char): T, acc: T): T =
     result = f(result, val)
 
 proc isPaired*(input: string): bool =
-  var acc: seq[char] = @[]
-  let stack = input.reduce(process, acc)
-  stack == @[]
+  input.reduce(process, @[]) == @[]
