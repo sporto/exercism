@@ -26,22 +26,9 @@ proc canAttack*(w: Pos, b: Pos): bool =
   rank or file or diagonal
 
 
-proc charFor(w: Pos, b: Pos, current: Pos): char =
-  if w == current:
-    'W'
-  elif b == current:
-    'B'
-  else:
-    '_' 
-
-
 proc board*(w: Pos, b: Pos): seq[string] =
   validate(w, b)
 
-  result = @[]
-
-  for rank in 0..7:
-    var line = ""
-    for file in 0..7:
-      line &= charFor(w, b, (rank, file))
-    result.add(line)
+  result = repeat("________", 8)
+  result[w[0]][w[1]] = 'W'
+  result[b[0]][b[1]] = 'B'
