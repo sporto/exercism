@@ -13,3 +13,6 @@ TestResult.xml
 **/bin/Debug/
 **/bin/Release/
 **/obj/Debug/
+.exercism
+.merlin
+
