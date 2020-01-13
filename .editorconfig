@@ -6,6 +6,10 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
+[*.purs]
+indent_style = space
+indent_size = 2
+
 [Makefile]
 indent_style = tab
 indent_size = 2
