@@ -16,3 +16,6 @@ TestResult.xml
 .exercism
 .merlin
 
+
+.fake
+.ionide
