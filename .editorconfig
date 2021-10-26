@@ -17,6 +17,8 @@ indent_size = 4
 [*.fs]
 indent_style = space
 indent_size = 4
+max_line_length = 80
+fsharp_multiline_block_brackets_on_same_column = true
 
 [Makefile]
 indent_style = tab
